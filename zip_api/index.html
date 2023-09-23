@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>Zip Code Api</h3>
+    <h4>郵便番号7ケタ（例0000000）</h4>
+    <div>
+      <input id="input" oninput="postData()" />
+    </div>
+    <div id="error"></div>
+    <p>住所</p>
+    <p id="estimationaddress"></p>
+  </body>
+  <script>
+    const postData = () => {
+      const input = document.getElementById("input").value;
+      console.log(input);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open(
+        "GET",
+        "https://zipcloud.ibsnet.co.jp/api/search?zipcode=" + input,
+        true
+      );
+
+      xhr.onload = () => {
+        const response = JSON.parse(xhr.responseText);
+        console.log(response);
+        const address =
+          response.results[0].address1 +
+          response.results[0].address2 +
+          response.results[0].address3;
+
+        console.log(address);
+
+        if (response.results.status !== 200) {
+          let text = document.getElementById("error").textContent;
+          document.getElementById("error").textContent =
+            "7桁の数字を入力してください。";
+        }
+
+        let text = document.getElementById("estimationaddress").textContent;
+        document.getElementById("estimationaddress").textContent = address;
+
+        // リクエストの終了。ここの処理を実行します。
+      };
+
+      xhr.send(null);
+    };
+  </script>
+</html>
