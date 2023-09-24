@@ -35,9 +35,10 @@
           response.results[0].address2 +
           response.results[0].address3;
 
+        console.log(response.message);
         console.log(address);
 
-        if (response.results.status !== 200) {
+        if (response.message !== 200) {
           let text = document.getElementById("error").textContent;
           document.getElementById("error").textContent =
             "7桁の数字を入力してください。";
