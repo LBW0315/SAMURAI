@@ -30,21 +30,25 @@
       xhr.onload = () => {
         const response = JSON.parse(xhr.responseText);
         console.log(response);
-        const address =
-          response.results[0].address1 +
-          response.results[0].address2 +
-          response.results[0].address3;
 
-        console.log(response.message);
-
-        if (response.message !== 200) {
+        if (response.message !== null) {
           let text = document.getElementById("error").textContent;
           document.getElementById("error").textContent =
             "7桁の数字を入力してください。";
-        }
+        } else {
+          const address =
+            response.results[0].address1 +
+            response.results[0].address2 +
+            response.results[0].address3;
 
-        let text = document.getElementById("estimationaddress").textContent;
-        document.getElementById("estimationaddress").textContent = address;
+          console.log(response.message);
+
+          let text = document.getElementById("error").textContent;
+          document.getElementById("error").textContent = "";
+
+          let text2 = document.getElementById("estimationaddress").textContent;
+          document.getElementById("estimationaddress").textContent = address;
+        }
 
         // リクエストの終了。ここの処理を実行します。
       };
